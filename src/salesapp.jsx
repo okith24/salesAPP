@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Papa from 'papaparse'
 import Charts from './Charts'
+import ExportButton from './ExportButton'
+import Insights from './Insights'
 
 function SalesApp() {
   const [data, setData] = useState([])
@@ -177,7 +179,7 @@ function SalesApp() {
         <div style={{ padding: '2rem 2.5rem' }}>
 
           <p style={{ color: '#9ca3af', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
-            ✅ Loaded <strong style={{ color: 'white' }}>{fileName}</strong> — {data.length} rows, {headers.length} columns
+             Loaded <strong style={{ color: 'white' }}>{fileName}</strong> — {data.length} rows, {headers.length} columns
           </p>
 
           {/* Stats Bar */}
@@ -188,16 +190,8 @@ function SalesApp() {
             marginBottom: '2rem'
           }}>
             {[
-              {
-                label: 'Total Rows',
-                value: data.length.toLocaleString(),
-                color: '#a78bfa'
-              },
-              {
-                label: 'Total Columns',
-                value: headers.length,
-                color: '#60a5fa'
-              },
+              { label: 'Total Rows', value: data.length.toLocaleString(), color: '#a78bfa' },
+              { label: 'Total Columns', value: headers.length, color: '#60a5fa' },
               {
                 label: 'Missing Values',
                 value: data.reduce((acc, row) =>
@@ -283,7 +277,7 @@ function SalesApp() {
           {/* Cleaning Section */}
           <div style={{ marginTop: '2.5rem' }}>
             <h2 style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '1rem' }}>
-              🧹 Data Cleaning
+               Data Cleaning
             </h2>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
@@ -310,6 +304,7 @@ function SalesApp() {
                   {btn.label}
                 </button>
               ))}
+              <ExportButton data={data} headers={headers} fileName={fileName} addLog={addLog} />
             </div>
 
             {/* Clean Log */}
@@ -339,6 +334,9 @@ function SalesApp() {
 
           {/* Charts */}
           <Charts data={data} headers={headers} />
+
+          {/* Insights */}
+          <Insights data={data} headers={headers} />
 
         </div>
       )}
